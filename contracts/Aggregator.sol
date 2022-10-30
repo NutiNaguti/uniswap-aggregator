@@ -9,8 +9,11 @@ contract Aggregator {
     address[] public routers;
     // address[] public connectors;
 
-    constructor(address[] memory _routers) {
+    uint256 deadlineDuration;
+
+    constructor(address[] memory _routers, uint256 _deadlineDuration) {
         routers = _routers;
+        deadlineDuration = _deadlineDuration;
     }
 
     /**
@@ -91,7 +94,7 @@ contract Aggregator {
 
         IPancakeRouter02 router = IPancakeRouter02(routerAddress);
         
-        uint256 deadline = block.timestamp + 30;
+        uint256 deadline = block.timestamp + deadlineDuration;
         uint256[] memory amountsOut = router.swapExactTokensForTokens(amountIn, amountOutMin, path, msg.sender, deadline);
         amountOut = amountsOut[amountsOut.length - 1];
     }

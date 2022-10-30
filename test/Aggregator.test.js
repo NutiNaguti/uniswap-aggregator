@@ -20,6 +20,7 @@ describe("Aggregator tests", () => {
 
     const ERC20ABI = require('./abi/ERC20.json');
     const BUSD_AMOUNT = ethers.BigNumber.from("100000000000000000");
+    const DEADLINE_DURATION = 30;
 
     beforeEach(async () => {
         const routers = [
@@ -36,7 +37,7 @@ describe("Aggregator tests", () => {
         ]
 
         Aggregator = await ethers.getContractFactory("Aggregator");
-        aggregator = await Aggregator.deploy(routers);
+        aggregator = await Aggregator.deploy(routers, DEADLINE_DURATION);
         [owner, address1] = await ethers.getSigners();
     });
 
